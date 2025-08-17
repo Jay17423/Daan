@@ -1,12 +1,16 @@
-from sqlmodel import SQLModel, create_engine
 from app.config.settings import settings
+
+
+from sqlmodel import SQLModel,Field,create_engine, Session
+from typing import Optional
+from app.models.user import User
+
 
 
 engine = create_engine(settings.DATABASE_URL, echo=True)
 
-def init_db():
-    try:
-        with engine.connect() as conn:
-            print("Database connection successful!")
-    except Exception as e:
-        print("Database connection failed:", e)
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
+
+
+
